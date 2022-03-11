@@ -40,9 +40,7 @@ const Layout = () => {
           </div>
         </div>
       </nav>
-      <div className='container mt-5'>
-        <Outlet />
-      </div>
+      <Outlet />
     </>
   );
 };

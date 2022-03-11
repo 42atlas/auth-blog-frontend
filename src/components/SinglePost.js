@@ -28,10 +28,16 @@ const SinglePost = () => {
   if (error) return <Alert error={error} type='danger' />;
   if (loading) return <Loading />;
   return post ? (
-    <div className='row'>
-      <h1 className='text-center'>{post.title}</h1>
-      <img src={post.image} alt={post.title} className='img-fluid' />
-      <p>{post.body}</p>
+    <div>
+      <div className='row'>
+        <img src={post.image} alt={post.title} style={{ height: '15vw', objectFit: 'cover' }} />
+      </div>
+      <div className='container mt-5'>
+        <div className='row'>
+          <h1 className='text-center'>{post.title}</h1>
+          <p>{post.body}</p>
+        </div>
+      </div>
     </div>
   ) : (
     'Nothing to show... 😔'
