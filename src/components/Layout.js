@@ -2,22 +2,48 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <NavLink to='/'>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to='/new-post'>Create post</NavLink>
-          </li>
-          <li>
-            <NavLink to='/about'>About</NavLink>
-          </li>
-        </ul>
+    <>
+      <nav className='navbar navbar-expand navbar-dark bg-dark' aria-label='Second navbar example'>
+        <div className='container-fluid'>
+          <a className='navbar-brand' href='#'>
+            Cities in the world! ✈️🌍
+          </a>
+          <button
+            className='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarsExample02'
+            aria-controls='navbarsExample02'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+          >
+            <span className='navbar-toggler-icon'></span>
+          </button>
+          <div className='collapse navbar-collapse' id='navbarsExample02'>
+            <ul className='navbar-nav ms-auto'>
+              <li className='nav-item'>
+                <NavLink to='/' className='nav-link'>
+                  Home
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink to='/new-post' className='nav-link'>
+                  Create post
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink to='/about' className='nav-link'>
+                  About
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
-      <Outlet />
-    </div>
+      <div className='container'>
+        <Outlet />
+      </div>
+    </>
   );
 };
 
