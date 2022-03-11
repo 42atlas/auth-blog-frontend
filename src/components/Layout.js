@@ -1,13 +1,13 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
     <>
       <nav className='navbar navbar-expand navbar-dark bg-dark' aria-label='Second navbar example'>
         <div className='container-fluid'>
-          <a className='navbar-brand' href='#'>
+          <Link className='navbar-brand' to='/'>
             Cities in the world! ✈️🌍
-          </a>
+          </Link>
           <button
             className='navbar-toggler'
             type='button'
@@ -40,7 +40,7 @@ const Layout = () => {
           </div>
         </div>
       </nav>
-      <div className='container'>
+      <div className='container mt-5'>
         <Outlet />
       </div>
     </>
