@@ -27,7 +27,15 @@ const SinglePost = () => {
 
   if (error) return <Alert error={error} type='danger' />;
   if (loading) return <Loading />;
-  return post ? <div>{post.title}</div> : 'Nothing to show... 😔';
+  return post ? (
+    <div className='row'>
+      <h1 className='text-center'>{post.title}</h1>
+      <img src={post.image} alt={post.title} className='img-fluid' />
+      <p>{post.body}</p>
+    </div>
+  ) : (
+    'Nothing to show... 😔'
+  );
 };
 
 export default SinglePost;
