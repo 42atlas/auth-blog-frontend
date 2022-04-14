@@ -1,30 +1,27 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import Loading from './Loading';
-import Alert from './Alert';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_BLOG_API_URL}/posts`)
-      .then(({ data }) => {
+    (async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get(`${process.env.REACT_APP_BLOG_API_URL}/posts`);
         setPosts(data);
         setLoading(false);
-      })
-      .catch(() => {
-        setError('Something went wrong, sorry 😔');
-        setTimeout(() => setError(null), 3000);
+      } catch (error) {
+        toast.error('Something went wrong 😔. Please come back later');
         setLoading(false);
-      });
+      }
+    })();
   }, []);
 
-  if (error) return <Alert error={error} type='danger' />;
   if (loading) return <Loading />;
   return (
     <div className='container mt-5'>
@@ -32,15 +29,11 @@ const Home = () => {
         {posts.map(post => (
           <div key={post._id} className='col-md-4 mb-4'>
             <div className='card'>
-              <img
-                src={post.image}
-                className='card-img-top'
-                style={{ objectFit: 'cover', height: '10rem' }}
-                alt={post.title}
-              />
+              <img src={post.image} className='card-img-top' style={{ objectFit: 'cover', height: '10rem' }} alt={post.title} />
               <div className='card-body text-center'>
                 <h5 className='card-title '>{post.title}</h5>
-                <Link to={`/post/${post._id}`} className='btn btn-primary btn-sm'>
+                <h6 className='card-subtitle '>By: {post.author.name}</h6>
+                <Link to={`/post/${post._id}`} className='mt-4 btn btn-primary btn-sm'>
                   More
                 </Link>
               </div>

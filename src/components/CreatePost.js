@@ -1,38 +1,38 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CreatePost = () => {
   const navigate = useNavigate();
   const [{ title, author, image, body }, setFormState] = useState({
     title: '',
-    author: '',
     image: '',
     body: ''
   });
 
   const handleInputChange = e => setFormState(prev => ({ ...prev, [e.target.id]: e.target.value }));
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!title || !author || !image || !body) return alert('All fields are required');
-    const data = JSON.stringify({ title, author, image, body });
-
-    axios
-      .post(`${process.env.REACT_APP_BLOG_API_URL}/posts`, data, {
+  const handleSubmit = async e => {
+    try {
+      e.preventDefault();
+      if (!title || !image || !body) return alert('All fields are required');
+      const data = JSON.stringify({ title, author, image, body });
+      const { data: newPost } = await axios.post(`${process.env.REACT_APP_BLOG_API_URL}/posts`, data, {
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-      .then(({ data }) => navigate(`/post/${data._id}`))
-      .catch(err => console.log(err));
+      });
+      navigate(`/post/${newPost._id}`);
 
-    setFormState({
-      title: '',
-      author: '',
-      image: '',
-      body: ''
-    });
+      setFormState({
+        title: '',
+        image: '',
+        body: ''
+      });
+    } catch (error) {
+      toast.error(error.response?.data.error || error.message);
+    }
   };
 
   return (
@@ -44,41 +44,15 @@ const CreatePost = () => {
               <label htmlFor='title' className='form-label'>
                 Title
               </label>
-              <input
-                type='text'
-                className='form-control'
-                id='title'
-                value={title}
-                onChange={handleInputChange}
-              />
+              <input type='text' className='form-control' id='title' value={title} onChange={handleInputChange} />
             </div>
           </div>
           <div className='col-md-6'>
             <div className='mb-3'>
-              <label htmlFor='author' className='form-label'>
-                Author
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='author'
-                value={author}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className='col'>
-            <div className='mb-3'>
               <label htmlFor='image' className='form-label'>
                 Image
               </label>
-              <input
-                type='text'
-                className='form-control'
-                id='image'
-                value={image}
-                onChange={handleInputChange}
-              />
+              <input type='text' className='form-control' id='image' value={image} onChange={handleInputChange} />
             </div>
           </div>
           <div className='col-12'>
@@ -86,12 +60,7 @@ const CreatePost = () => {
               <label htmlFor='body' className='form-label'>
                 Body
               </label>
-              <textarea
-                className='form-control'
-                id='body'
-                value={body}
-                onChange={handleInputChange}
-              />
+              <textarea className='form-control' id='body' value={body} onChange={handleInputChange} />
             </div>
           </div>
 

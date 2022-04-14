@@ -1,8 +1,11 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
   return (
     <>
+      <ToastContainer />
       <nav className='navbar navbar-expand navbar-dark bg-dark' aria-label='Second navbar example'>
         <div className='container-fluid'>
           <Link className='navbar-brand' to='/'>
